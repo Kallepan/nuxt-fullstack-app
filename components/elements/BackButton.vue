@@ -1,5 +1,18 @@
+<script setup lang="ts">
+const emit = defineEmits(["clickWithNoNavigation"]);
+
+// navigate to the previous page if the user clicks the back button and the current page is not the home page
+function navigateBack() {
+  if (window.location.pathname === "/") {
+    emit("clickWithNoNavigation");
+    return;
+  }
+
+  $router.back();
+}
+</script>
 <template>
-  <button class="relative inline-flex mt-2 items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group" @click="$router.back()">
+  <button class="relative inline-flex mt-2 items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group" @click="navigateBack()">
     <span class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full"></span>
 
     <span class="absolute left-0 pl-4 duration-200 ease-out group-hover:translate-x-12">
