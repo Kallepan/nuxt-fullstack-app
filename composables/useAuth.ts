@@ -14,60 +14,53 @@ export async function useUser(): Promise<IUser> {
     return user.value;
   }
 
-  return useFetch<IUser>(`/api/auth/getByAuthToken`, {
+  const { data } = await useFetch<IUser>(`/api/auth/getByAuthToken`, {
     headers: useRequestHeaders(["cookie"]),
-  })
-    .then((res) => res.data)
-    .then((res) => {
-      if (res.value) {
-        user.value = res.value;
-      }
-      return user.value;
-    })
-    .catch((e) => {
-      console.error(e);
-      return user.value;
-    });
+  });
+
+  if (!data || !data.value) {
+    return user.value;
+  }
+
+  user.value = data.value;
+
+  return user.value;
 }
 
 export async function userLogout(): Promise<void | NavigationFailure | undefined> {
-  return useFetch("/api/auth/logout")
-    .then(() => {
-      useState("user").value = null;
-    })
-    .then(() => useRouter().push("/"));
+  await useFetch("/api/auth/logout");
+  useState("user").value = null;
+
+  return useRouter().push("/");
 }
 
 export async function registerWithEmail(username: string, name: string, email: string, password: string): Promise<FormValidation> {
-  return useFetch<ISession>("/api/auth/register", {
-    method: "POST",
-    body: { data: { username, name, email, password } },
-  })
-    .then(async ({ data, error }) => {
-      if (error) {
-        type ErrorData = {
-          data: ErrorData;
-        };
-
-        const errorData = error.value as unknown as ErrorData;
-        const errors = errorData.data.data as unknown as string;
-        const parsedError = JSON.parse(errors);
-        const errorMap = new Map<string, { check: InputValidation }>(Object.entries(parsedError));
-
-        return { hasErrors: true, errors: errorMap };
-      }
-
-      if (data) {
-        useState("user").value = data;
-        await useRouter().push("/dashboard");
-      }
-
-      return { hasErrors: false };
-    })
-    .catch((e) => {
-      console.error(e);
-      return { hasErrors: true };
+  try {
+    const { data, error } = await useFetch<ISession>("/api/auth/register", {
+      method: "POST",
+      body: { data: { username, name, email, password } },
     });
+    if (error.value) {
+      throw new Error(error.value.message);
+    }
+
+    if (data) {
+      useState("user").value = data;
+      await useRouter().push("/dashboard");
+    }
+
+    return { hasErrors: false };
+  } catch (e) {
+    type ErrorData = {
+      data: ErrorData;
+    };
+
+    const errorData = e as unknown as ErrorData;
+    const errors = errorData.data.data as unknown as string;
+    const parsedError = JSON.parse(errors);
+    const errorMap = new Map<string, { check: InputValidation }>(Object.entries(parsedError));
+    return { hasErrors: true, errors: errorMap };
+  }
 }
 
 export async function loginWithEmail(email: string, password: string) {
