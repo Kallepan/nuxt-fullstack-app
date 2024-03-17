@@ -9,6 +9,15 @@
                 "kind": "build",
                 "isDefault": true
             },
+        },
+        {
+            "label": "npx: migrate",
+            "type": "shell",
+            "command": "npx prisma migrate dev",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
         }
     ]
 }

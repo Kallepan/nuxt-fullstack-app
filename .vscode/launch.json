@@ -4,6 +4,16 @@
     "version": "0.2.0",
     "configurations": [
       {
+        "type": "node",
+        "request": "launch",
+        "name": "database: prismastudio",
+        "runtimeExecutable": "npx",
+        "runtimeArgs": [
+          "prisma",
+          "studio"
+        ],
+      },
+      {
         "type": "chrome",
         "request": "launch",
         "name": "client: chrome",
