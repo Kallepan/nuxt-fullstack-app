@@ -1,22 +1,8 @@
 <script setup lang="ts">
 import BackButton from "~/components/elements/BackButton.vue";
-import Popup from "~/components/elements/Popup.vue";
 import { useState } from "#app";
 import type { Theme } from "~/types/theme";
 import UserComponent from "../UserComponent.vue";
-
-// popup
-const displayPopup = ref(false);
-const message = ref("");
-function displayNoNavigationWarning() {
-  displayPopup.value = true;
-  message.value = "You are already on the home page";
-
-  // remove the popup after 5 seconds
-  setTimeout(() => {
-    displayPopup.value = false;
-  }, 5000);
-}
 
 const user = useState("user");
 const setColorTheme = (newTheme: Theme) => {
@@ -74,8 +60,7 @@ const setColorTheme = (newTheme: Theme) => {
           </svg>
         </button>
       </div>
-      <BackButton @click-with-no-navigation="displayNoNavigationWarning()" />
-      <Popup v-if="displayPopup" :message @popup-closed="displayPopup = false" />
+      <BackButton />
     </div>
   </div>
 </template>

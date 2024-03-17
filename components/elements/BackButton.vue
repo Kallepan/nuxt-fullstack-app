@@ -1,14 +1,26 @@
 <script setup lang="ts">
-const emit = defineEmits(["clickWithNoNavigation"]);
-
 // navigate to the previous page if the user clicks the back button and the current page is not the home page
+const popupStore = useState("popup");
+function displayNoNavigationWarning() {
+  popupStore.value = {
+    display: true,
+    message: "You are already on the home page!",
+  };
+
+  // cleanup
+  setTimeout(() => {
+    popupStore.value = { display: false, message: "" };
+  }, 5000);
+}
+
 function navigateBack() {
-  if (window.location.pathname === "/") {
-    emit("clickWithNoNavigation");
+  const router = useRouter();
+  if (router.currentRoute.value.path === "/") {
+    displayNoNavigationWarning();
     return;
   }
 
-  $router.back();
+  router.back();
 }
 </script>
 <template>
