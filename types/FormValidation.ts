@@ -1,9 +1,15 @@
 import type { InputValidation } from "./InputValidation";
 
-export type FormValidation = {
-  hasErrors: boolean;
-  errors?: Map<string, { check: InputValidation }>;
-};
+type ValidationErrors = Map<string, { check: InputValidation }>;
+
+export type FormValidation =
+  | {
+      hasErrors: true;
+      errors: ValidationErrors;
+    }
+  | {
+      hasErrors: false;
+    };
 
 export type FormErrors = {
   field: string;

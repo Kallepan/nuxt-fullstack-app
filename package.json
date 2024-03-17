@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
+    "@vueuse/core": "^10.9.0",
     "bcrypt": "^5.1.1",
     "nuxt": "^3.10.3",
+    "uuid": "^9.0.1",
     "vue": "^3.4.19",
     "vue-router": "^4.3.0"
   },
@@ -22,6 +24,7 @@
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@prisma/client": "^5.11.0",
     "@types/bcrypt": "^5.0.2",
+    "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "eslint": "^8.57.0",
@@ -32,7 +35,7 @@
     "typescript": "^5.3.3",
     "vue-eslint-parser": "^9.4.2"
   },
-  "prisma" : {
+  "prisma": {
     "schema": "server/database/schema.prisma"
   }
 }
