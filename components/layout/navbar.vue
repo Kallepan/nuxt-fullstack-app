@@ -3,6 +3,7 @@ import BackButton from "~/components/elements/BackButton.vue";
 import Popup from "~/components/elements/Popup.vue";
 import { useState } from "#app";
 import type { Theme } from "~/types/theme";
+import UserComponent from "../UserComponent.vue";
 
 // popup
 const displayPopup = ref(false);
@@ -35,6 +36,11 @@ const setColorTheme = (newTheme: Theme) => {
             </svg>
           </button>
         </div>
+        <nuxt-link to="/">
+          <span class="sr-only">Workflow</span>
+          <img class="h-24 w-auto transition duration-500 scale-50 hover:scale-110" src="/img/logo_clear_fsj.png" />
+        </nuxt-link>
+
         <nav class="hidden md:flex space-x-10">
           <nuxt-link to="/state-examples">
             <span class="text-base font-medium text-gray-500 hover:text-gray-900"> State in Nuxt </span>
@@ -51,7 +57,7 @@ const setColorTheme = (newTheme: Theme) => {
         <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
           <nuxt-link v-if="!user" to="/login" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"> Sign in </nuxt-link>
 
-          <User v-if="user" :user="user" />
+          <UserComponent v-if="user" :user="user" />
 
           <nuxt-link v-if="!user" to="/register" class="transition duration-500 hover:scale-110 ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"> Sign up </nuxt-link>
 

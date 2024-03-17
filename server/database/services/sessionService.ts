@@ -6,7 +6,7 @@ import { createSession, getSessionByAuthToken } from "../repositories/sessionRep
 
 export async function makeSession(user: IUser, event: H3Event): Promise<IUser> {
   const authToken = uuidv4().replaceAll("-", "");
-  const session = await createSession({ authToken, userId: user.id });
+  const session = await createSession({ authToken, userId: user.id! });
   const userId = session.userId;
 
   if (userId) {
