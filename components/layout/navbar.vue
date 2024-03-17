@@ -43,6 +43,10 @@ const setColorTheme = (newTheme: Theme) => {
           <nuxt-link to="/dashboard">
             <span class="text-base font-medium text-gray-500 hover:text-gray-900"> Dashboard </span>
           </nuxt-link>
+
+          <nuxt-link to="/faq">
+            <span class="text-base font-medium text-gray-500 hover:text-gray-900"> Q&A </span>
+          </nuxt-link>
         </nav>
         <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
           <nuxt-link v-if="!user" to="/login" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"> Sign in </nuxt-link>
