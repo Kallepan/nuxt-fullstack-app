@@ -1,4 +1,4 @@
-import { H3Event, sendError } from "h3";
+import { sendError } from "h3";
 import { IUser } from "~/types/IUser";
 
 import bcrypt from "bcrypt";
@@ -7,7 +7,7 @@ import { RegistationRequest } from "~/types/IRegistration";
 import { validateUser } from "~/server/database/services/userService";
 import { makeSession } from "~/server/database/services/sessionService";
 
-export default defineEventHandler(async (event: H3Event) => {
+export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const data = body.data as RegistationRequest;
 
