@@ -24,7 +24,7 @@ const setColorTheme = (newTheme: Theme) => {
         </div>
         <nuxt-link to="/">
           <span class="sr-only">Workflow</span>
-          <img class="h-24 w-auto transition duration-500 scale-50 hover:scale-110" src="/img/logo_clear_fsj.png" />
+          <img class="h-24 w-auto transition duration-500 scale-50 hover:scale-110" src="/img/logo_clear_fsa.png" />
         </nuxt-link>
 
         <nav class="hidden md:flex space-x-10">
