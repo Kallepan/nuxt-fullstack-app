@@ -41,7 +41,16 @@ export async function registerWithEmail(username: string, name: string, email: s
       body: { data: { username, name, email, password } },
     });
     if (error.value) {
-      throw new Error(error.value.message);
+      type ErrorData = {
+        data: ErrorData;
+      };
+
+      const errorData = error.value as unknown as ErrorData;
+      const errors = errorData.data.data as unknown as string;
+      const res = JSON.parse(errors);
+      const errorMap = new Map<string, { check: InputValidation }>(Object.entries(res));
+
+      return { hasErrors: true, errors: errorMap };
     }
 
     if (data) {
@@ -50,16 +59,9 @@ export async function registerWithEmail(username: string, name: string, email: s
     }
 
     return { hasErrors: false };
-  } catch (e) {
-    type ErrorData = {
-      data: ErrorData;
-    };
-
-    const errorData = e as unknown as ErrorData;
-    const errors = errorData.data.data as unknown as string;
-    const parsedError = JSON.parse(errors);
-    const errorMap = new Map<string, { check: InputValidation }>(Object.entries(parsedError));
-    return { hasErrors: true, errors: errorMap };
+  } catch (e: unknown) {
+    console.error(`error: ${(e as Error).toString()}`);
+    return { hasErrors: true, errors: new Map<string, { check: InputValidation }>([["error", { check: { key: "error", isBlank: false, lenghtMin8: false, hasError: true, value: "Unknown error" } }]]) };
   }
 }
 
