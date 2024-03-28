@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     return;
   }
 
-  const isPasswordCorrect = bcrypt.compare(password, user.password!);
+  const isPasswordCorrect = await bcrypt.compare(password, user.password!);
 
   if (!isPasswordCorrect) {
     sendError(event, createError({ statusCode: 401, statusMessage: "Unauthenticated" }));
